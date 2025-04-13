@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
     token = header.split(" ").last if header
     decoded = JsonWebToken.decode(token)
 
-    @current_user = User.find(decoded[:user_id]) if decoded
+    @current_user = User.find_by(email: decoded[:user_email]) if decoded
 
     if @current_user.blank? || @current_user.jti != decoded[:jti]
       render json: { error: "Not Authorized" }, status: :unauthorized
