@@ -4,7 +4,7 @@ class AuthController < ApplicationController
   def register
     user = User.new(user_params)
     if user.save
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(user_id: user.id, jti: user.jti)
       render json: { token:, user: }, status: :created
     else
       render json: { error: user.errors.full_messages }, status: :unprocessable_entity
@@ -14,7 +14,7 @@ class AuthController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      token = JsonWebToken.encode(user_id: user.id)
+      token = JsonWebToken.encode(user_id: user.id, jti: user.jti)
       render json: { token:, user: }, status: :ok
     else
       render json: { error: "Invalid email or password" }, status: :unauthorized
@@ -22,6 +22,7 @@ class AuthController < ApplicationController
   end
 
   def logout
+    @current_user.invalidate_jti!
     render json: { message: "Logged out successfully" }, status: :ok
   end
 
