@@ -1,13 +1,16 @@
 class EventsController < ApplicationController
   before_action :authorize_request
-  before_action :set_event, only: [ :show, :update, :destroy ]
+  before_action :set_event, only: [ :update, :destroy ]
 
   def index
-    @events = Event.all
-    render json: @events, status: :ok
+    @events = Event.page(params[:page]).per(params[:limit] || 10)
+    render json: @events, meta: pagination_meta(@events), status: :ok
   end
 
   def show
+    @event = Event.includes(:ticket_types).find(params[:id])
+    authorize @event
+
     render json: @event, status: :ok
   end
 

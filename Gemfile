@@ -46,6 +46,10 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-gem "jwt"
+gem "jwt", "~> 2.10"
 
 gem "pundit", "~> 2.5"
+
+gem "active_model_serializers", "~> 0.10.15"
+
+gem "kaminari", "~> 1.2"

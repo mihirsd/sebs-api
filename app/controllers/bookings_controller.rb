@@ -2,8 +2,12 @@ class BookingsController < ApplicationController
   before_action :authorize_request
 
   def index
-    @bookings = current_user.bookings.includes(:ticket_type)
-    render json: @bookings, status: :ok
+    @bookings = current_user.bookings
+                            .includes(ticket_type: :event)
+                            .page(params[:page])
+                            .per(params[:per_page] || 10)
+
+    render json: @bookings, meta: pagination_meta(@bookings)
   end
 
   def create
