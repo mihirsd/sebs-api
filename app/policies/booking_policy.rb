@@ -1,9 +1,9 @@
 class BookingPolicy < ApplicationPolicy
-  def create?
+  def index?
     user.role == "customer"
   end
 
-  def index?
-    user.role == "customer"
+  def create?
+    index?
   end
 end

@@ -1,4 +1,12 @@
 class EventPolicy < ApplicationPolicy
+  def index?
+    true
+  end
+
+  def show?
+    true
+  end
+
   def create?
     user.role == "organizer"
   end
@@ -9,13 +17,5 @@ class EventPolicy < ApplicationPolicy
 
   def destory?
     update?
-  end
-
-  def show?
-    true
-  end
-
-  def index?
-    true
   end
 end
