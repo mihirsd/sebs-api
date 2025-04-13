@@ -22,7 +22,7 @@ class AuthController < ApplicationController
   end
 
   def logout
-    @current_user.invalidate_jti!
+    current_user.invalidate_jti!
     render json: { message: "Logged out successfully" }, status: :ok
   end
 

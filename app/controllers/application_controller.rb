@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  include Pundit
+
   before_action :authorize_request
 
   def authorize_request
@@ -9,7 +11,11 @@ class ApplicationController < ActionController::API
     @current_user = User.find_by(email: decoded[:user_email]) if decoded
 
     if @current_user.blank? || @current_user.jti != decoded[:jti]
-      render json: { error: "Not Authorized" }, status: :unauthorized
+      render json: { error: "Unauthorized" }, status: :unauthorized
     end
+  end
+
+  def current_user
+    @current_user
   end
 end
