@@ -1,13 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+standard:
+  event: event_one
+  name: Standard
+  price: 50
+  quantity: 10
 
-one:
-  name: MyString
-  price: 9.99
-  quantity: 1
-  event: one
-
-two:
-  name: MyString
-  price: 9.99
-  quantity: 1
-  event: two
+empty:
+  event: event_one
+  name: EmptyTest
+  price: 10
+  quantity: 10

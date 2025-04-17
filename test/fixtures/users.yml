@@ -1,13 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+customer:
+  email: customer@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  role: customer
+  jti: <%= SecureRandom.uuid %>
 
-one:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  role: MyString
-
-two:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  role: MyString
+organizer:
+  email: organizer@example.com
+  password_digest: <%= BCrypt::Password.create('password') %>
+  role: organizer
+  jti: <%= SecureRandom.uuid %>
