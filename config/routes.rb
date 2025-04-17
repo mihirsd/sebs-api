@@ -1,28 +1,28 @@
-Rails.application.routes.draw do
-  get "bookings/index"
-  get "bookings/create"
-  get "ticket_types/index"
-  get "ticket_types/create"
-  get "ticket_types/update"
-  get "ticket_types/destroy"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+require "sidekiq/web"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+Rails.application.routes.draw do
+  # Sidekiq Web UI
+  mount Sidekiq::Web => "/sidekiq"
+
+  # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Auth routes
   post "auth/login", to: "auth#login"
   post "auth/logout", to: "auth#logout"
   post "auth/register", to: "auth#register"
 
+  # User profile
   get "profile", to: "user#profile"
 
+  # Nested ticket_types inside events
   resources :events do
     resources :ticket_types, only: [ :index, :create, :update, :destroy ]
   end
 
+  # Bookings routes
   resources :bookings, only: [ :index, :create ]
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # root route (optional)
+  # root "home#index"
 end

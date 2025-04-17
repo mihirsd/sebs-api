@@ -53,3 +53,7 @@ gem "pundit", "~> 2.5"
 gem "active_model_serializers", "~> 0.10.15"
 
 gem "kaminari", "~> 1.2"
+
+gem "sidekiq", "~> 8.0"
+
+gem "foreman", "~> 0.88.1"
